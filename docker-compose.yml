@@ -1,0 +1,245 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: ecommerce-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ecommerce_products
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    networks:
+      - ecommerce-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Config Server
+  config-server:
+    build:
+      context: ./config-server
+      dockerfile: Dockerfile
+    container_name: ecommerce-config-server
+    ports:
+      - "8001:8001"
+    networks:
+      - ecommerce-network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8001/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Eureka Server
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    container_name: ecommerce-eureka-server
+    ports:
+      - "8002:8002"
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8001
+      - SPRING_CLOUD_CONFIG_FAIL_FAST=false
+      - SPRING_CLOUD_CONFIG_RETRY_MAX_ATTEMPTS=10
+      - SPRING_CLOUD_CONFIG_RETRY_INITIAL_INTERVAL=2000
+    depends_on:
+      config-server:
+        condition: service_healthy
+    networks:
+      - ecommerce-network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8002/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Gateway Service
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    container_name: ecommerce-gateway
+    ports:
+      - "8003:8003"
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8001
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8001
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8002/eureka/
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - ecommerce-network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8003/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Product Service
+  product-service:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    container_name: ecommerce-product-service
+    ports:
+      - "8004:8004"
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8001
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8001
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8002/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/ecommerce_products?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - ecommerce-network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8004/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  # Order Service
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    container_name: ecommerce-order-service
+    ports:
+      - "8005:8005"
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8001
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8001
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8002/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/ecommerce_orders?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - ecommerce-network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8005/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  # Client API
+  client-api:
+    build:
+      context: ./client-api
+      dockerfile: Dockerfile
+    container_name: ecommerce-client-api
+    ports:
+      - "8006:8006"
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8001
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8001
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8002/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/ecommerce_users?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - ecommerce-network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8006/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  # React Frontend
+  react-frontend:
+    build:
+      context: ./react-frontend
+      dockerfile: Dockerfile
+    container_name: ecommerce-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      gateway-service:
+        condition: service_healthy
+    networks:
+      - ecommerce-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ecommerce-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    networks:
+      - ecommerce-network
+    depends_on:
+      - config-server
+      - eureka-server
+      - gateway-service
+      - product-service
+      - order-service
+      - client-api
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ecommerce-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - ecommerce-network
+    depends_on:
+      - prometheus
+
+networks:
+  ecommerce-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  prometheus-data:
+  grafana-data:

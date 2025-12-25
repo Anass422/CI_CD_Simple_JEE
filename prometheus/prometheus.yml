@@ -1,0 +1,54 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'ecommerce-monitor'
+
+scrape_configs:
+  # Config Server
+  - job_name: 'config-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['config-server:8001']
+        labels:
+          application: 'config-server'
+
+  # Eureka Server
+  - job_name: 'eureka-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['eureka-server:8002']
+        labels:
+          application: 'eureka-server'
+
+  # Gateway Service
+  - job_name: 'gateway-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['gateway-service:8003']
+        labels:
+          application: 'gateway-service'
+
+  # Product Service
+  - job_name: 'product-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['product-service:8004']
+        labels:
+          application: 'product-service'
+
+  # Order Service
+  - job_name: 'order-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['order-service:8005']
+        labels:
+          application: 'order-service'
+
+  # Client API
+  - job_name: 'client-api'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['client-api:8006']
+        labels:
+          application: 'client-api'

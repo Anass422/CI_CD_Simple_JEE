@@ -1,0 +1,31 @@
+# Docker
+.env
+docker-compose.override.yml
+
+# Maven
+**/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Node
+**/node_modules/
+**/dist/
+**/build/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
