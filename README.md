@@ -1,6 +1,6 @@
 # E-Commerce Microservices Application
 
-![CI/CD](https://github.com/Anass422/E-Commerce/workflows/CI/CD%20Simple/badge.svg)
+![CI/CD](https://github.com/Anass422/CI_CD_Simple_JEE/workflows/CI/CD%20Simple/badge.svg)
 ![Docker](https://img.shields.io/badge/docker-ready-blue)
 ![Java](https://img.shields.io/badge/java-21-orange)
 ![Spring Boot](https://img.shields.io/badge/spring%20boot-3.5.8-green)
