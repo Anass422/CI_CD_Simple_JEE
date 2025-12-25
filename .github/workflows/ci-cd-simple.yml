@@ -82,8 +82,8 @@ jobs:
         run: |
           for service in config-server eureka-server gateway-service product-service order-service client-api react-frontend; do
             echo "Building Docker image for $service..."
-            docker build -t ghcr.io/${{ github.repository_owner }}/ecommerce-$service:latest ./$service
-            docker push ghcr.io/${{ github.repository_owner }}/ecommerce-$service:latest
+            docker build -t ghcr.io/anass422/ecommerce-$service:latest ./$service
+            docker push ghcr.io/anass422/ecommerce-$service:latest
           done
 
   # Job 4: Notification
