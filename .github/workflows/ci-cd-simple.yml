@@ -33,11 +33,6 @@ jobs:
             cd ..
           done
 
-      - name: Run unit tests (skip integration tests)
-        run: |
-          echo "✅ Build successful - Tests skipped (require Config Server)"
-          echo "To run tests locally: docker-compose up -d && mvn test"
-
   # Job 2: Build Frontend
   build-frontend:
     name: Build Frontend
