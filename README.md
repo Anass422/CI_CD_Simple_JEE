@@ -8,7 +8,8 @@
 Application e-commerce complète basée sur une architecture microservices avec Spring Cloud.
 
 **📊 Monitoring** : [Prometheus](http://localhost:9090) | [Grafana](http://localhost:3001) | [Eureka](http://localhost:8002)  
-**📖 Documentation** : [CI/CD Guide](CI_CD_GUIDE.md) | [Docker Guide](DOCKER_README.md)
+**📖 Documentation** : [CI/CD Presentation](PRESENTATION_CICD.md) | [CI/CD Guide](CI_CD_GUIDE.md) | [Docker Guide](DOCKER_README.md)  
+**🔗 Repository** : https://github.com/Anass422/CI_CD_Simple_JEE
 
 ## 🏗️ Architecture
 
