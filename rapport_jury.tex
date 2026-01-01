@@ -1,0 +1,2114 @@
+\documentclass[12pt,a4paper]{report}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\setmainfont{Cambria}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+
+% Configuration des listings
+\definecolor{codegreen}{rgb}{0,0,0}
+\definecolor{codegray}{rgb}{0,0,0}
+\definecolor{codepurple}{rgb}{0,0,0}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{black},
+    keywordstyle=\color{black},
+    numberstyle=\tiny\color{black},
+    stringstyle=\color{black},
+    basicstyle=\ttfamily\footnotesize\color{black},
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Configuration des liens - TOUT EN NOIR
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,      
+    urlcolor=black,
+    citecolor=black,
+    pdftitle={Rapport de Projet E-Commerce},
+    pdfpagemode=FullScreen,
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Début du document
+\begin{document}
+
+% Page de titre
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\LARGE\bfseries Rapport de Projet de Fin d'Études\par}
+    \vspace{1.5cm}
+    
+    {\Huge\bfseries Plateforme E-Commerce\par}
+    \vspace{0.5cm}
+    {\Huge\bfseries basée sur une Architecture Microservices\par}
+    \vspace{2cm}
+    
+    {\Large\itshape Développement d'une application web distribuée\par}
+    {\Large\itshape avec Spring Boot et React\par}
+    \vspace{2cm}
+    
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft}
+            \textbf{Réalisé par:}\\
+            Anass EL GHAZOUI
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright}
+            \textbf{Encadré par:}\\
+            [Nom de l'encadrant]
+        \end{flushright}
+    \end{minipage}
+    
+    \vfill
+    
+    {\large Année Universitaire 2024-2025\par}
+\end{titlepage}
+
+% Table des matières
+\tableofcontents
+\newpage
+
+% Liste des figures
+\listoffigures
+\newpage
+
+% Liste des tableaux
+\listoftables
+\newpage
+
+% Introduction générale
+\chapter*{Introduction Générale}
+\addcontentsline{toc}{chapter}{Introduction Générale}
+
+Dans un contexte économique de plus en plus digitalisé, le commerce électronique s'impose comme un pilier fondamental de l'économie moderne. Les entreprises cherchent constamment à améliorer leurs plateformes pour offrir une expérience utilisateur optimale tout en garantissant la scalabilité, la fiabilité et la maintenabilité de leurs systèmes.
+
+\section*{Contexte du projet}
+\addcontentsline{toc}{section}{Contexte du projet}
+
+Le présent projet s'inscrit dans le cadre du développement d'une plateforme e-commerce complète utilisant une architecture microservices. Cette approche architecturale moderne permet de décomposer une application monolithique en plusieurs services indépendants, chacun responsable d'une fonctionnalité métier spécifique. Cette modularité offre de nombreux avantages en termes de scalabilité, de déploiement indépendant et de maintenance.
+
+L'architecture microservices est devenue le standard de facto pour les applications d'entreprise modernes, notamment dans le domaine du e-commerce où les exigences en termes de disponibilité, de performance et d'évolutivité sont particulièrement élevées. Des géants du web comme Amazon, Netflix et eBay ont démontré l'efficacité de cette approche pour gérer des millions de transactions quotidiennes.
+
+\section*{Problématique}
+\addcontentsline{toc}{section}{Problématique}
+
+Le développement d'une plateforme e-commerce moderne soulève plusieurs défis techniques et architecturaux:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Scalabilité}: Comment garantir que le système peut gérer une augmentation significative du trafic sans dégradation des performances?
+    \item \textbf{Disponibilité}: Comment assurer une disponibilité continue du service, même en cas de défaillance d'un composant?
+    \item \textbf{Sécurité}: Comment protéger les données sensibles des utilisateurs et sécuriser les transactions?
+    \item \textbf{Maintenabilité}: Comment faciliter l'évolution et la maintenance du système dans le temps?
+    \item \textbf{Intégration}: Comment orchestrer efficacement la communication entre les différents services?
+\end{itemize}
+
+\section*{Objectifs du projet}
+\addcontentsline{toc}{section}{Objectifs du projet}
+
+Ce projet vise à concevoir et développer une plateforme e-commerce complète en adoptant une architecture microservices. Les objectifs spécifiques sont les suivants:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Conception d'une architecture microservices robuste}: Définir une architecture modulaire avec des services indépendants pour la gestion des produits, des commandes et des utilisateurs.
+    
+    \item \textbf{Implémentation des services backend}: Développer les microservices en utilisant Spring Boot et Spring Cloud, en intégrant les patterns essentiels (Service Discovery, API Gateway, Configuration centralisée).
+    
+    \item \textbf{Développement d'une interface utilisateur moderne}: Créer une application frontend réactive avec React, offrant une expérience utilisateur fluide et intuitive.
+    
+    \item \textbf{Sécurisation de l'application}: Mettre en place un système d'authentification et d'autorisation basé sur JWT, avec vérification par email.
+    
+    \item \textbf{Containerisation et déploiement}: Utiliser Docker pour containeriser les services et faciliter le déploiement.
+    
+    \item \textbf{Monitoring et observabilité}: Intégrer des outils de monitoring (Prometheus, Grafana) pour surveiller la santé et les performances du système.
+\end{enumerate}
+
+\section*{Méthodologie adoptée}
+\addcontentsline{toc}{section}{Méthodologie adoptée}
+
+Pour mener à bien ce projet, nous avons adopté une approche itérative et incrémentale, inspirée des méthodologies agiles. Le développement s'est articulé autour des phases suivantes:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Analyse et spécification}: Identification des besoins fonctionnels et non fonctionnels, définition des cas d'utilisation.
+    
+    \item \textbf{Conception}: Élaboration de l'architecture globale, conception des modèles de données, définition des APIs.
+    
+    \item \textbf{Développement}: Implémentation itérative des services backend et frontend, en commençant par les fonctionnalités essentielles.
+    
+    \item \textbf{Tests et validation}: Tests unitaires, tests d'intégration et tests end-to-end pour garantir la qualité du code.
+    
+    \item \textbf{Déploiement}: Containerisation avec Docker et orchestration avec Docker Compose.
+\end{enumerate}
+
+\section*{Organisation du rapport}
+\addcontentsline{toc}{section}{Organisation du rapport}
+
+Ce rapport est structuré en quatre chapitres principaux:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Chapitre 1 - Présentation générale du projet}: Présente le contexte, les technologies utilisées et l'architecture globale du système.
+    
+    \item \textbf{Chapitre 2 - Analyse et spécification des besoins}: Détaille les besoins fonctionnels et non fonctionnels, ainsi que les cas d'utilisation.
+    
+    \item \textbf{Chapitre 3 - Conception}: Décrit l'architecture détaillée du système, les modèles de données et les choix techniques.
+    
+    \item \textbf{Chapitre 4 - Réalisation et tests}: Présente l'implémentation concrète des différents composants et les résultats des tests.
+\end{itemize}
+
+Le rapport se conclut par une synthèse des réalisations et des perspectives d'évolution du projet.
+
+\chapter{Présentation Générale du Projet}
+
+\section{Introduction}
+
+Ce chapitre présente le contexte général du projet, les technologies utilisées et l'architecture globale de la plateforme e-commerce. Nous détaillerons les choix technologiques qui ont guidé le développement et justifierons l'adoption d'une architecture microservices.
+
+\section{Présentation de l'architecture microservices}
+
+\subsection{Définition et principes}
+
+L'architecture microservices est un style architectural qui structure une application comme un ensemble de services faiblement couplés, chacun implémentant une capacité métier spécifique. Contrairement à l'architecture monolithique traditionnelle, où toutes les fonctionnalités sont regroupées dans une seule application, les microservices permettent de décomposer le système en composants indépendants.
+
+Les principes fondamentaux de cette architecture sont:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Décomposition par domaine métier}: Chaque service correspond à une fonctionnalité métier distincte (gestion des produits, gestion des commandes, gestion des utilisateurs).
+    
+    \item \textbf{Autonomie des services}: Chaque microservice possède sa propre base de données et peut être développé, déployé et mis à l'échelle indépendamment.
+    
+    \item \textbf{Communication via APIs}: Les services communiquent entre eux via des APIs REST ou des mécanismes de messagerie asynchrone.
+    
+    \item \textbf{Décentralisation}: Pas de point central de contrôle, chaque équipe peut choisir les technologies adaptées à son service.
+    
+    \item \textbf{Résilience}: La défaillance d'un service ne doit pas compromettre l'ensemble du système.
+\end{itemize}
+
+\subsection{Avantages de l'architecture microservices}
+
+L'adoption d'une architecture microservices offre de nombreux avantages:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Scalabilité horizontale}: Possibilité de scaler individuellement les services en fonction de la charge.
+    
+    \item \textbf{Déploiement indépendant}: Chaque service peut être déployé sans impacter les autres, facilitant les mises à jour continues.
+    
+    \item \textbf{Isolation des pannes}: Une erreur dans un service n'affecte pas nécessairement les autres services.
+    
+    \item \textbf{Flexibilité technologique}: Liberté de choisir la stack technologique la plus adaptée pour chaque service.
+    
+    \item \textbf{Organisation en équipes}: Facilite l'organisation en équipes autonomes, chacune responsable d'un ou plusieurs services.
+    
+    \item \textbf{Maintenabilité}: Code plus modulaire et plus facile à comprendre et à maintenir.
+\end{enumerate}
+
+\subsection{Défis et solutions}
+
+Malgré ses avantages, l'architecture microservices présente également des défis:
+
+\begin{table}[H]
+\centering
+\caption{Défis et solutions dans l'architecture microservices}
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Défi} & \textbf{Description} & \textbf{Solution adoptée} \\
+\hline
+Découverte de services & Les services doivent se localiser dynamiquement & Eureka Server (Service Discovery) \\
+\hline
+Configuration & Gestion centralisée des configurations & Config Server avec repository Git \\
+\hline
+Routage & Point d'entrée unique pour les clients & API Gateway (Spring Cloud Gateway) \\
+\hline
+Monitoring & Surveillance de multiples services & Prometheus + Grafana \\
+\hline
+Traçabilité & Suivi des requêtes à travers les services & Actuator endpoints \\
+\hline
+\end{tabularx}
+\end{table}
+
+\section{Technologies utilisées}
+
+\subsection{Backend - Écosystème Spring}
+
+Le backend de la plateforme repose sur l'écosystème Spring, reconnu pour sa robustesse et sa richesse fonctionnelle:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Spring Boot 3.5.9}: Framework principal pour le développement des microservices, offrant une configuration automatique et un démarrage rapide.
+    
+    \item \textbf{Spring Cloud 2025.0.1}: Suite d'outils pour implémenter les patterns microservices (Service Discovery, API Gateway, Configuration centralisée).
+    
+    \item \textbf{Spring Data JPA}: Abstraction pour l'accès aux données, simplifiant les opérations CRUD et les requêtes personnalisées.
+    
+    \item \textbf{Spring Security}: Framework de sécurité pour l'authentification et l'autorisation.
+    
+    \item \textbf{Spring Cloud Netflix Eureka}: Service de découverte permettant aux microservices de s'enregistrer et de se localiser.
+    
+    \item \textbf{Spring Cloud Gateway}: API Gateway pour le routage des requêtes et la gestion des préoccupations transversales (CORS, authentification).
+    
+    \item \textbf{Spring Cloud Config}: Serveur de configuration centralisée pour gérer les propriétés de tous les services.
+    
+    \item \textbf{OpenFeign}: Client HTTP déclaratif pour faciliter la communication inter-services.
+\end{itemize}
+
+\subsection{Frontend - React}
+
+L'interface utilisateur est développée avec React, une bibliothèque JavaScript moderne:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{React 19.2.0}: Bibliothèque pour la construction d'interfaces utilisateur réactives et performantes.
+    
+    \item \textbf{React Router DOM 7.11.0}: Gestion du routage côté client pour une navigation fluide.
+    
+    \item \textbf{Axios 1.13.2}: Client HTTP pour communiquer avec le backend via l'API Gateway.
+    
+    \item \textbf{Vite 7.2.4}: Build tool moderne offrant un démarrage rapide et un rechargement à chaud (HMR).
+    
+    \item \textbf{TailwindCSS 3.4.1}: Framework CSS utilitaire pour un design moderne et responsive.
+\end{itemize}
+
+\subsection{Base de données}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{MySQL 8.0}: Système de gestion de base de données relationnelle, utilisé pour stocker les données de chaque microservice dans des bases séparées (ecommerce\_products, ecommerce\_orders, ecommerce\_users).
+\end{itemize}
+
+\subsection{Monitoring et observabilité}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Prometheus}: Système de monitoring et d'alerting pour collecter les métriques des services.
+    
+    \item \textbf{Grafana}: Plateforme de visualisation pour créer des dashboards interactifs à partir des métriques Prometheus.
+    
+    \item \textbf{Spring Boot Actuator}: Endpoints de production pour surveiller et gérer l'application (health checks, métriques).
+    
+    \item \textbf{Micrometer}: Façade pour les métriques d'application, intégré avec Prometheus.
+\end{itemize}
+
+\subsection{Containerisation et déploiement}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Docker}: Plateforme de containerisation pour empaqueter les services et leurs dépendances.
+    
+    \item \textbf{Docker Compose}: Outil pour définir et exécuter des applications multi-conteneurs.
+\end{itemize}
+
+\subsection{Outils de développement}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Java 21}: Version LTS (Long Term Support) du langage Java, offrant les dernières fonctionnalités et optimisations.
+    
+    \item \textbf{Maven}: Outil de gestion de projet et de build pour les applications Java.
+    
+    \item \textbf{Lombok}: Bibliothèque pour réduire le code boilerplate (getters, setters, constructeurs).
+    
+    \item \textbf{Git}: Système de contrôle de version pour le suivi des modifications du code.
+\end{itemize}
+
+\section{Architecture globale du système}
+
+\subsection{Vue d'ensemble}
+
+La plateforme e-commerce est composée de plusieurs microservices interconnectés, chacun ayant une responsabilité spécifique. L'architecture suit le pattern de microservices avec les composants d'infrastructure nécessaires (Service Discovery, API Gateway, Config Server).
+
+\subsection{Composants de l'architecture}
+
+\subsubsection{Services d'infrastructure}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Config Server (Port 8001)}
+    \begin{itemize}
+        \item Rôle: Fournir une configuration centralisée pour tous les microservices
+        \item Technologie: Spring Cloud Config Server
+        \item Source: Repository Git local (config-repo)
+        \item Avantage: Modification des configurations sans redéploiement des services
+    \end{itemize}
+    
+    \item \textbf{Eureka Server (Port 8002)}
+    \begin{itemize}
+        \item Rôle: Service de découverte et d'enregistrement des microservices
+        \item Technologie: Spring Cloud Netflix Eureka
+        \item Fonctionnement: Les services s'enregistrent au démarrage et peuvent se localiser mutuellement
+        \item Dashboard: Interface web pour visualiser les services enregistrés
+    \end{itemize}
+    
+    \item \textbf{Gateway Service (Port 8003)}
+    \begin{itemize}
+        \item Rôle: Point d'entrée unique pour toutes les requêtes clients
+        \item Technologie: Spring Cloud Gateway (WebFlux)
+        \item Fonctionnalités: Routage dynamique, gestion CORS, load balancing
+        \item Sécurité: Validation des tokens JWT pour les endpoints protégés
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Services métier}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Product Service (Port 8004)}
+    \begin{itemize}
+        \item Responsabilité: Gestion du catalogue de produits et des catégories
+        \item Base de données: ecommerce\_products
+        \item Entités: Product, Category
+        \item APIs: CRUD produits, CRUD catégories, recherche et filtrage
+    \end{itemize}
+    
+    \item \textbf{Order Service (Port 8005)}
+    \begin{itemize}
+        \item Responsabilité: Gestion des commandes et du panier
+        \item Base de données: ecommerce\_orders
+        \item Entités: Order, OrderItem, Cart, CartItem
+        \item APIs: Gestion du panier, création et suivi des commandes
+        \item Communication: Appels vers Product Service via OpenFeign
+    \end{itemize}
+    
+    \item \textbf{Client API (Port 8006)}
+    \begin{itemize}
+        \item Responsabilité: Gestion des utilisateurs et authentification
+        \item Base de données: ecommerce\_users
+        \item Entités: User, VerificationToken
+        \item Fonctionnalités: Inscription, connexion, vérification email, gestion JWT
+        \item Sécurité: BCrypt pour le hashage des mots de passe, JWT pour l'authentification
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Frontend}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{React Frontend (Port 3000)}
+    \begin{itemize}
+        \item Rôle: Interface utilisateur web
+        \item Communication: Toutes les requêtes passent par l'API Gateway (port 8003)
+        \item Pages: Accueil, Produits, Détail produit, Panier, Commandes, Profil, Authentification
+        \item Gestion d'état: Context API pour l'authentification
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Monitoring}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Prometheus (Port 9090)}
+    \begin{itemize}
+        \item Collecte des métriques exposées par les services via /actuator/prometheus
+        \item Stockage des time-series
+        \item Requêtes PromQL pour analyser les données
+    \end{itemize}
+    
+    \item \textbf{Grafana (Port 3001)}
+    \begin{itemize}
+        \item Visualisation des métriques Prometheus
+        \item Dashboards personnalisés pour le monitoring
+        \item Alerting (optionnel)
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Flux de communication}
+
+\subsubsection{Flux d'authentification}
+
+\begin{enumerate}[leftmargin=*]
+    \item L'utilisateur soumet ses identifiants via le frontend
+    \item La requête passe par l'API Gateway (port 8003)
+    \item Le Gateway route vers Client API (port 8006)
+    \item Client API valide les credentials et génère un token JWT
+    \item Le token est retourné au client et stocké (localStorage)
+    \item Les requêtes suivantes incluent le token dans le header Authorization
+\end{enumerate}
+
+\subsubsection{Flux de commande}
+
+\begin{enumerate}[leftmargin=*]
+    \item L'utilisateur ajoute des produits au panier (Order Service)
+    \item Order Service vérifie la disponibilité via Product Service (OpenFeign)
+    \item Lors de la validation, Order Service crée une commande
+    \item Order Service met à jour le stock via Product Service
+    \item La commande est confirmée et retournée au client
+\end{enumerate}
+
+\subsection{Schéma d'architecture}
+
+L'architecture peut être représentée par le schéma suivant:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={rectangle, draw, fill=blue!20, text width=3cm, text centered, minimum height=1cm},
+    service/.style={rectangle, draw, fill=green!20, text width=3cm, text centered, minimum height=1cm},
+    db/.style={cylinder, draw, fill=orange!20, text width=2cm, text centered, minimum height=1cm, shape border rotate=90}
+]
+
+% Frontend
+\node[box] (frontend) {React Frontend\\Port 3000};
+
+% Gateway
+\node[service, below=of frontend] (gateway) {API Gateway\\Port 8003};
+
+% Eureka
+\node[service, left=of gateway, xshift=-1cm] (eureka) {Eureka Server\\Port 8002};
+
+% Config
+\node[service, right=of gateway, xshift=1cm] (config) {Config Server\\Port 8001};
+
+% Services métier
+\node[service, below=of gateway, xshift=-3cm] (product) {Product Service\\Port 8004};
+\node[service, below=of gateway] (order) {Order Service\\Port 8005};
+\node[service, below=of gateway, xshift=3cm] (client) {Client API\\Port 8006};
+
+% Bases de données
+\node[db, below=of product] (dbproduct) {MySQL\\products};
+\node[db, below=of order] (dborder) {MySQL\\orders};
+\node[db, below=of client] (dbclient) {MySQL\\users};
+
+% Monitoring
+\node[service, below=of dborder, yshift=-1cm] (prometheus) {Prometheus\\Port 9090};
+\node[service, right=of prometheus] (grafana) {Grafana\\Port 3001};
+
+% Connexions
+\draw[->] (frontend) -- (gateway);
+\draw[<->] (gateway) -- (eureka);
+\draw[<->] (gateway) -- (config);
+\draw[<->] (gateway) -- (product);
+\draw[<->] (gateway) -- (order);
+\draw[<->] (gateway) -- (client);
+\draw[<->] (product) -- (dbproduct);
+\draw[<->] (order) -- (dborder);
+\draw[<->] (client) -- (dbclient);
+\draw[<->] (order) -- (product);
+\draw[->] (product) -- (prometheus);
+\draw[->] (order) -- (prometheus);
+\draw[->] (client) -- (prometheus);
+\draw[->] (prometheus) -- (grafana);
+
+\end{tikzpicture}
+\caption{Architecture globale de la plateforme e-commerce}
+\end{figure}
+
+\section{Conclusion}
+
+Ce chapitre a présenté le contexte général du projet, les technologies utilisées et l'architecture globale de la plateforme. L'adoption d'une architecture microservices, combinée à l'écosystème Spring et React, permet de construire une application moderne, scalable et maintenable. Le chapitre suivant détaillera l'analyse et la spécification des besoins fonctionnels et non fonctionnels.
+
+\chapter{Analyse et Spécification des Besoins}
+
+\section{Introduction}
+
+Ce chapitre présente l'analyse détaillée des besoins de la plateforme e-commerce. Nous identifierons les besoins fonctionnels et non fonctionnels, définirons les acteurs du système et présenterons les cas d'utilisation principaux.
+
+\section{Identification des acteurs}
+
+\subsection{Utilisateur non authentifié (Visiteur)}
+
+Un visiteur est un utilisateur qui accède à la plateforme sans être connecté. Ses capacités sont limitées:
+
+\begin{itemize}[leftmargin=*]
+    \item Consulter le catalogue de produits
+    \item Voir les détails d'un produit
+    \item Rechercher et filtrer les produits par catégorie
+    \item S'inscrire pour créer un compte
+    \item Se connecter avec un compte existant
+\end{itemize}
+
+\subsection{Utilisateur authentifié (Client)}
+
+Un client est un utilisateur qui s'est inscrit et connecté à la plateforme. Il bénéficie de fonctionnalités supplémentaires:
+
+\begin{itemize}[leftmargin=*]
+    \item Toutes les fonctionnalités du visiteur
+    \item Ajouter des produits au panier
+    \item Modifier les quantités dans le panier
+    \item Passer des commandes
+    \item Consulter l'historique de ses commandes
+    \item Voir les détails d'une commande
+    \item Gérer son profil utilisateur
+\end{itemize}
+
+\subsection{Administrateur}
+
+L'administrateur a des privilèges étendus pour gérer la plateforme:
+
+\begin{itemize}[leftmargin=*]
+    \item Toutes les fonctionnalités du client
+    \item Gérer le catalogue de produits (ajout, modification, suppression)
+    \item Gérer les catégories de produits
+    \item Consulter toutes les commandes
+    \item Modifier le statut des commandes
+    \item Gérer les utilisateurs
+\end{itemize}
+
+\section{Besoins fonctionnels}
+
+\subsection{Module d'authentification et gestion des utilisateurs}
+
+\subsubsection{BF1: Inscription}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Permettre à un visiteur de créer un compte utilisateur
+    \item \textbf{Données requises}: Nom d'utilisateur, email, mot de passe, prénom, nom
+    \item \textbf{Validations}:
+    \begin{itemize}
+        \item Nom d'utilisateur unique (3-50 caractères)
+        \item Email valide et unique
+        \item Mot de passe sécurisé (hashé avec BCrypt)
+        \item Prénom et nom obligatoires
+    \end{itemize}
+    \item \textbf{Processus}:
+    \begin{enumerate}
+        \item L'utilisateur remplit le formulaire d'inscription
+        \item Le système valide les données
+        \item Un code de vérification à 6 chiffres est généré
+        \item Un email de vérification est envoyé
+        \item Le compte est créé mais désactivé (enabled=false)
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection{BF2: Vérification par email}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Vérifier l'adresse email de l'utilisateur
+    \item \textbf{Processus}:
+    \begin{enumerate}
+        \item L'utilisateur reçoit un code à 6 chiffres par email
+        \item Le code expire après un délai défini
+        \item L'utilisateur saisit le code sur la page de vérification
+        \item Le système valide le code
+        \item Le compte est activé (enabled=true)
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection{BF3: Connexion}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Permettre à un utilisateur de s'authentifier
+    \item \textbf{Données requises}: Username et mot de passe
+    \item \textbf{Processus}:
+    \begin{enumerate}
+        \item L'utilisateur saisit ses identifiants
+        \item Le système vérifie que le compte est activé
+        \item Le système valide le mot de passe (BCrypt)
+        \item Un token JWT est généré (validité: 1 heure)
+        \item Le token est retourné au client
+    \end{enumerate}
+    \item \textbf{Sécurité}: Token JWT contenant le username
+\end{itemize}
+
+\subsubsection{BF4: Gestion du profil}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Permettre à l'utilisateur de consulter et modifier ses informations
+    \item \textbf{Fonctionnalités}:
+    \begin{itemize}
+        \item Consulter les informations du profil
+        \item Modifier le prénom et le nom
+        \item Modifier le mot de passe (avec vérification de l'ancien mot de passe)
+    \end{itemize}
+\end{itemize}
+
+\subsection{Module de gestion des produits}
+
+\subsubsection{BF5: Consultation du catalogue}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Afficher la liste des produits disponibles
+    \item \textbf{Fonctionnalités}:
+    \begin{itemize}
+        \item Affichage paginé des produits
+        \item Filtrage par catégorie
+        \item Recherche par nom
+        \item Affichage des informations: nom, prix, image, stock disponible
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{BF6: Détails d'un produit}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Afficher les informations détaillées d'un produit
+    \item \textbf{Informations affichées}:
+    \begin{itemize}
+        \item Nom du produit
+        \item Description complète
+        \item Prix
+        \item Stock disponible
+        \item Catégorie
+        \item Image
+        \item Date de création
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{BF7: Gestion des produits (Administrateur)}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Permettre à l'administrateur de gérer le catalogue
+    \item \textbf{Fonctionnalités}:
+    \begin{itemize}
+        \item Créer un nouveau produit
+        \item Modifier un produit existant
+        \item Supprimer un produit
+        \item Gérer le stock
+    \end{itemize}
+    \item \textbf{Validations}:
+    \begin{itemize}
+        \item Nom du produit: 3-100 caractères, obligatoire
+        \item Prix: supérieur à 0
+        \item Stock: nombre entier positif ou nul
+        \item Catégorie: doit exister
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{BF8: Gestion des catégories}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Organiser les produits par catégories
+    \item \textbf{Fonctionnalités}:
+    \begin{itemize}
+        \item Créer une catégorie
+        \item Modifier une catégorie
+        \item Supprimer une catégorie (si aucun produit associé)
+        \item Lister toutes les catégories
+    \end{itemize}
+\end{itemize}
+
+\subsection{Module de gestion du panier et des commandes}
+
+\subsubsection{BF9: Gestion du panier}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Permettre à l'utilisateur de gérer son panier
+    \item \textbf{Fonctionnalités}:
+    \begin{itemize}
+        \item Ajouter un produit au panier (avec quantité)
+        \item Modifier la quantité d'un article
+        \item Supprimer un article du panier
+        \item Vider le panier
+        \item Consulter le contenu du panier avec le total
+    \end{itemize}
+    \item \textbf{Règles métier}:
+    \begin{itemize}
+        \item Un utilisateur ne peut avoir qu'un seul panier actif
+        \item La quantité ne peut pas dépasser le stock disponible
+        \item Le prix est calculé automatiquement (quantité × prix unitaire)
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{BF10: Passage de commande}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Transformer le panier en commande
+    \item \textbf{Processus}:
+    \begin{enumerate}
+        \item L'utilisateur valide son panier
+        \item Le système vérifie la disponibilité des produits
+        \item Le stock est mis à jour (décrémenté)
+        \item Une commande est créée avec le statut PENDING
+        \item Les articles du panier sont copiés comme OrderItems
+        \item Le panier est vidé
+        \item La commande est retournée à l'utilisateur
+    \end{enumerate}
+    \item \textbf{Validations}:
+    \begin{itemize}
+        \item Le panier ne doit pas être vide
+        \item Tous les produits doivent être disponibles en stock
+        \item L'utilisateur doit être authentifié
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{BF11: Consultation des commandes}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Description}: Permettre à l'utilisateur de consulter ses commandes
+    \item \textbf{Fonctionnalités}:
+    \begin{itemize}
+        \item Lister toutes les commandes de l'utilisateur
+        \item Afficher les détails d'une commande spécifique
+        \item Voir le statut de la commande (PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED)
+        \item Consulter les articles de la commande
+        \item Voir le montant total
+    \end{itemize}
+\end{itemize}
+
+\section{Besoins non fonctionnels}
+
+\subsection{Performance}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{BNF1}: Le temps de réponse des APIs ne doit pas excéder 2 secondes pour 95\% des requêtes
+    \item \textbf{BNF2}: La page d'accueil doit se charger en moins de 3 secondes
+    \item \textbf{BNF3}: Le système doit supporter au moins 100 utilisateurs simultanés
+\end{itemize}
+
+\subsection{Sécurité}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{BNF4}: Les mots de passe doivent être hashés avec BCrypt (facteur de coût minimum: 10)
+    \item \textbf{BNF5}: L'authentification doit utiliser des tokens JWT avec expiration
+    \item \textbf{BNF6}: Les endpoints sensibles doivent être protégés par authentification
+    \item \textbf{BNF7}: Les communications doivent utiliser HTTPS en production
+    \item \textbf{BNF8}: Protection contre les attaques CSRF et XSS
+    \item \textbf{BNF9}: Validation stricte des entrées utilisateur
+\end{itemize}
+
+\subsection{Disponibilité et fiabilité}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{BNF10}: Le système doit avoir une disponibilité de 99\% (hors maintenance)
+    \item \textbf{BNF11}: Les services doivent implémenter des health checks
+    \item \textbf{BNF12}: Les erreurs doivent être gérées gracieusement avec des messages appropriés
+    \item \textbf{BNF13}: Les transactions critiques (commandes) doivent être atomiques
+\end{itemize}
+
+\subsection{Scalabilité}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{BNF14}: L'architecture doit permettre le scaling horizontal des services
+    \item \textbf{BNF15}: Chaque microservice doit pouvoir être déployé indépendamment
+    \item \textbf{BNF16}: Le système doit supporter l'ajout de nouvelles instances de services sans interruption
+\end{itemize}
+
+\subsection{Maintenabilité}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{BNF17}: Le code doit respecter les conventions de nommage Java et JavaScript
+    \item \textbf{BNF18}: Les services doivent être documentés (Javadoc, commentaires)
+    \item \textbf{BNF19}: Les APIs doivent suivre les principes REST
+    \item \textbf{BNF20}: Le code doit être versionné avec Git
+\end{itemize}
+
+\subsection{Observabilité}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{BNF21}: Tous les services doivent exposer des métriques Prometheus
+    \item \textbf{BNF22}: Les logs doivent être structurés et centralisés
+    \item \textbf{BNF23}: Un dashboard Grafana doit permettre de visualiser l'état du système
+\end{itemize}
+
+\subsection{Portabilité}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{BNF24}: Tous les services doivent être containerisés avec Docker
+    \item \textbf{BNF25}: Le déploiement doit être automatisé via Docker Compose
+    \item \textbf{BNF26}: L'application doit être portable sur différents environnements (dev, staging, production)
+\end{itemize}
+
+\section{Cas d'utilisation}
+
+\subsection{Diagramme de cas d'utilisation global}
+
+La figure suivante présente les principaux cas d'utilisation du système:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    actor/.style={stick figure, draw, minimum height=1.5cm},
+    usecase/.style={ellipse, draw, minimum width=3cm, minimum height=1cm, text width=2.5cm, align=center},
+    system/.style={rectangle, draw, minimum width=12cm, minimum height=10cm}
+]
+
+% Système
+\node[system] (system) at (0,0) {};
+\node[above] at (system.north) {\textbf{Plateforme E-Commerce}};
+
+% Acteurs
+\node[actor, left=of system, yshift=3cm] (visitor) {};
+\node[below=0.1cm of visitor] {Visiteur};
+
+\node[actor, left=of system, yshift=-3cm] (client) {};
+\node[below=0.1cm of client] {Client};
+
+\node[actor, right=of system] (admin) {};
+\node[below=0.1cm of admin] {Admin};
+
+% Use cases - Visiteur
+\node[usecase] (browse) at (-3,3) {Consulter produits};
+\node[usecase] (register) at (-3,1.5) {S'inscrire};
+\node[usecase] (login) at (-3,0) {Se connecter};
+
+% Use cases - Client
+\node[usecase] (cart) at (0,-1.5) {Gérer panier};
+\node[usecase] (order) at (0,-3) {Passer commande};
+\node[usecase] (vieworders) at (0,-4.5) {Consulter commandes};
+
+% Use cases - Admin
+\node[usecase] (manageproducts) at (3,2) {Gérer produits};
+\node[usecase] (managecategories) at (3,0.5) {Gérer catégories};
+\node[usecase] (manageorders) at (3,-1) {Gérer commandes};
+
+% Relations
+\draw (visitor) -- (browse);
+\draw (visitor) -- (register);
+\draw (visitor) -- (login);
+
+\draw (client) -- (cart);
+\draw (client) -- (order);
+\draw (client) -- (vieworders);
+
+\draw (admin) -- (manageproducts);
+\draw (admin) -- (managecategories);
+\draw (admin) -- (manageorders);
+
+% Héritage
+\draw[dashed, -triangle 60] (client) -- (visitor);
+\draw[dashed, -triangle 60] (admin) -- (client);
+
+\end{tikzpicture}
+\caption{Diagramme de cas d'utilisation global}
+\end{figure}
+
+\subsection{Description détaillée des cas d'utilisation principaux}
+
+\subsubsection{CU1: S'inscrire}
+
+\begin{table}[H]
+\centering
+\caption{Description du cas d'utilisation: S'inscrire}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Acteur principal} & Visiteur \\
+\hline
+\textbf{Préconditions} & L'utilisateur n'a pas de compte \\
+\hline
+\textbf{Postconditions} & Un compte est créé et un email de vérification est envoyé \\
+\hline
+\textbf{Scénario nominal} & 
+\begin{enumerate}[leftmargin=*, nosep]
+    \item Le visiteur accède à la page d'inscription
+    \item Le visiteur remplit le formulaire (username, email, password, firstName, lastName)
+    \item Le visiteur soumet le formulaire
+    \item Le système valide les données
+    \item Le système crée le compte (enabled=false)
+    \item Le système génère un code de vérification
+    \item Le système envoie un email avec le code
+    \item Le système redirige vers la page de vérification
+\end{enumerate} \\
+\hline
+\textbf{Scénarios alternatifs} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item 4a. Email déjà utilisé: Message d'erreur
+    \item 4b. Username déjà utilisé: Message d'erreur
+    \item 4c. Données invalides: Messages de validation
+\end{itemize} \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsubsection{CU2: Passer une commande}
+
+\begin{table}[H]
+\centering
+\caption{Description du cas d'utilisation: Passer une commande}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Acteur principal} & Client authentifié \\
+\hline
+\textbf{Préconditions} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item L'utilisateur est connecté
+    \item Le panier contient au moins un article
+\end{itemize} \\
+\hline
+\textbf{Postconditions} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Une commande est créée
+    \item Le stock est mis à jour
+    \item Le panier est vidé
+\end{itemize} \\
+\hline
+\textbf{Scénario nominal} & 
+\begin{enumerate}[leftmargin=*, nosep]
+    \item Le client consulte son panier
+    \item Le client clique sur "Passer commande"
+    \item Le système vérifie la disponibilité des produits
+    \item Le système crée la commande (statut: PENDING)
+    \item Le système décrémente le stock des produits
+    \item Le système vide le panier
+    \item Le système affiche la confirmation avec le numéro de commande
+\end{enumerate} \\
+\hline
+\textbf{Scénarios alternatifs} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item 3a. Stock insuffisant: Message d'erreur, commande non créée
+    \item 3b. Produit supprimé: Message d'erreur, article retiré du panier
+\end{itemize} \\
+\hline
+\end{tabularx}
+\end{table}
+
+\section{Conclusion}
+
+Ce chapitre a détaillé les besoins fonctionnels et non fonctionnels de la plateforme e-commerce, identifié les acteurs du système et présenté les cas d'utilisation principaux. Ces spécifications serviront de base pour la phase de conception présentée dans le chapitre suivant.
+
+\chapter{Conception}
+
+\section{Introduction}
+
+Ce chapitre présente la conception détaillée de la plateforme e-commerce. Nous détaillerons les modèles de données, l'architecture des microservices, les APIs REST et les choix de conception techniques.
+
+\section{Modèles de données}
+
+\subsection{Modèle conceptuel de données}
+
+Le modèle conceptuel identifie les entités principales et leurs relations:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{User}: Représente un utilisateur de la plateforme
+    \item \textbf{Product}: Représente un produit du catalogue
+    \item \textbf{Category}: Catégorie de produits
+    \item \textbf{Cart}: Panier d'achat d'un utilisateur
+    \item \textbf{CartItem}: Article dans un panier
+    \item \textbf{Order}: Commande passée par un utilisateur
+    \item \textbf{OrderItem}: Article dans une commande
+\end{itemize}
+
+\subsection{Modèle logique de données}
+
+\subsubsection{Base de données ecommerce\_users}
+
+\begin{table}[H]
+\centering
+\caption{Table users}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Champ} & \textbf{Type} & \textbf{Description} \\
+\hline
+id & BIGINT & Identifiant unique (PK, auto-increment) \\
+\hline
+username & VARCHAR(50) & Nom d'utilisateur (unique, non null) \\
+\hline
+email & VARCHAR(255) & Adresse email (unique, non null) \\
+\hline
+password & VARCHAR(255) & Mot de passe hashé (BCrypt, non null) \\
+\hline
+first\_name & VARCHAR(50) & Prénom (non null) \\
+\hline
+last\_name & VARCHAR(50) & Nom de famille (non null) \\
+\hline
+role & ENUM & Rôle (USER, ADMIN) \\
+\hline
+enabled & BOOLEAN & Compte activé (default: false) \\
+\hline
+verification\_code & VARCHAR(6) & Code de vérification \\
+\hline
+code\_expiry\_date & DATETIME & Date d'expiration du code \\
+\hline
+created\_date & DATETIME & Date de création (non null) \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsubsection{Base de données ecommerce\_products}
+
+\begin{table}[H]
+\centering
+\caption{Table products}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Champ} & \textbf{Type} & \textbf{Description} \\
+\hline
+id & BIGINT & Identifiant unique (PK, auto-increment) \\
+\hline
+name & VARCHAR(100) & Nom du produit (non null, 3-100 car.) \\
+\hline
+description & VARCHAR(500) & Description du produit \\
+\hline
+price & DECIMAL(10,2) & Prix unitaire (non null, > 0) \\
+\hline
+stock & INT & Quantité en stock (non null, >= 0) \\
+\hline
+category\_id & BIGINT & Référence à la catégorie (FK) \\
+\hline
+image\_url & VARCHAR(255) & URL de l'image \\
+\hline
+created\_date & DATETIME & Date de création \\
+\hline
+updated\_date & DATETIME & Date de dernière modification \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Table categories}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Champ} & \textbf{Type} & \textbf{Description} \\
+\hline
+id & BIGINT & Identifiant unique (PK, auto-increment) \\
+\hline
+name & VARCHAR(50) & Nom de la catégorie (unique, non null) \\
+\hline
+description & VARCHAR(255) & Description de la catégorie \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsubsection{Base de données ecommerce\_orders}
+
+\begin{table}[H]
+\centering
+\caption{Table orders}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Champ} & \textbf{Type} & \textbf{Description} \\
+\hline
+id & BIGINT & Identifiant unique (PK, auto-increment) \\
+\hline
+user\_id & BIGINT & Référence à l'utilisateur (non null) \\
+\hline
+total\_amount & DECIMAL(10,2) & Montant total (non null, >= 0) \\
+\hline
+status & ENUM & Statut (PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED) \\
+\hline
+order\_date & DATETIME & Date de la commande (non null) \\
+\hline
+updated\_date & DATETIME & Date de dernière modification \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Table order\_items}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Champ} & \textbf{Type} & \textbf{Description} \\
+\hline
+id & BIGINT & Identifiant unique (PK, auto-increment) \\
+\hline
+order\_id & BIGINT & Référence à la commande (FK, non null) \\
+\hline
+product\_id & BIGINT & ID du produit (non null) \\
+\hline
+product\_name & VARCHAR(100) & Nom du produit (snapshot) \\
+\hline
+quantity & INT & Quantité commandée (non null, > 0) \\
+\hline
+unit\_price & DECIMAL(10,2) & Prix unitaire (snapshot, non null) \\
+\hline
+subtotal & DECIMAL(10,2) & Sous-total (quantité × prix) \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Table carts}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Champ} & \textbf{Type} & \textbf{Description} \\
+\hline
+id & BIGINT & Identifiant unique (PK, auto-increment) \\
+\hline
+user\_id & BIGINT & Référence à l'utilisateur (unique, non null) \\
+\hline
+created\_date & DATETIME & Date de création \\
+\hline
+updated\_date & DATETIME & Date de dernière modification \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Table cart\_items}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Champ} & \textbf{Type} & \textbf{Description} \\
+\hline
+id & BIGINT & Identifiant unique (PK, auto-increment) \\
+\hline
+cart\_id & BIGINT & Référence au panier (FK, non null) \\
+\hline
+product\_id & BIGINT & ID du produit (non null) \\
+\hline
+quantity & INT & Quantité (non null, > 0) \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Diagramme de classes}
+
+Les entités JPA sont définies avec les annotations suivantes:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{@Entity}: Marque la classe comme entité JPA
+    \item \textbf{@Table}: Spécifie le nom de la table
+    \item \textbf{@Id}: Identifie la clé primaire
+    \item \textbf{@GeneratedValue}: Stratégie de génération de l'ID (IDENTITY)
+    \item \textbf{@Column}: Configuration des colonnes (nullable, length, precision, scale)
+    \item \textbf{@ManyToOne, @OneToMany}: Relations entre entités
+    \item \textbf{@Enumerated}: Mapping des énumérations
+    \item \textbf{@PrePersist, @PreUpdate}: Callbacks pour les timestamps
+\end{itemize}
+
+\section{Architecture des microservices}
+
+\subsection{Décomposition en services}
+
+L'application est décomposée en microservices selon le principe de responsabilité unique:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Config Server}: Gestion centralisée de la configuration
+    \item \textbf{Eureka Server}: Découverte et enregistrement des services
+    \item \textbf{Gateway Service}: Routage et point d'entrée unique
+    \item \textbf{Product Service}: Gestion du catalogue produits
+    \item \textbf{Order Service}: Gestion des commandes et du panier
+    \item \textbf{Client API}: Gestion des utilisateurs et authentification
+\end{enumerate}
+
+\subsection{Communication inter-services}
+
+\subsubsection{Communication synchrone (OpenFeign)}
+
+Order Service communique avec Product Service via OpenFeign pour:
+
+\begin{itemize}[leftmargin=*]
+    \item Vérifier la disponibilité des produits
+    \item Récupérer les informations produit (nom, prix)
+    \item Mettre à jour le stock lors d'une commande
+\end{itemize}
+
+\textbf{Exemple de client Feign}:
+
+\begin{lstlisting}[language=Java, caption=ProductClient.java]
+@FeignClient(name = "product-service")
+public interface ProductClient {
+    
+    @GetMapping("/products/{id}")
+    ProductDTO getProductById(@PathVariable Long id);
+    
+    @PutMapping("/products/{id}/stock")
+    void updateStock(@PathVariable Long id, 
+                     @RequestParam Integer quantity);
+}
+\end{lstlisting}
+
+\subsubsection{Gestion des erreurs et résilience}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Circuit Breaker}: Activé via \texttt{feign.circuitbreaker.enabled=true}
+    \item \textbf{Timeouts}: Configuration des timeouts de connexion et de lecture
+    \item \textbf{Fallback}: Mécanismes de repli en cas d'indisponibilité
+\end{itemize}
+
+\subsection{Sécurité}
+
+\subsubsection{Authentification JWT}
+
+Le processus d'authentification utilise JSON Web Tokens:
+
+\begin{enumerate}[leftmargin=*]
+    \item L'utilisateur s'authentifie avec username/password
+    \item Client API valide les credentials
+    \item Un token JWT est généré avec les claims:
+    \begin{itemize}
+        \item Subject: username de l'utilisateur
+        \item IssuedAt: date de création du token
+        \item Expiration: 1 heure (3600000 ms)
+    \end{itemize}
+    \item Le token est signé avec une clé secrète (HMAC-SHA)
+    \item Le client stocke le token (localStorage)
+    \item Les requêtes suivantes incluent le token dans le header:
+    \begin{verbatim}
+    Authorization: Bearer <token>
+    \end{verbatim}
+\end{enumerate}
+
+\subsubsection{Configuration Spring Security}
+
+\begin{lstlisting}[language=Java, caption=SecurityConfig.java]
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) {
+    http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/auth/**").permitAll()
+            .anyRequest().authenticated()
+        )
+        .sessionManagement(session -> session
+            .sessionCreationPolicy(STATELESS)
+        )
+        .addFilterBefore(jwtAuthFilter, 
+            UsernamePasswordAuthenticationFilter.class);
+    return http.build();
+}
+\end{lstlisting}
+
+\subsubsection{Hashage des mots de passe}
+
+\begin{itemize}[leftmargin=*]
+    \item Algorithme: BCrypt
+    \item Facteur de coût: 10 (par défaut)
+    \item Salt: Généré automatiquement par BCrypt
+    \item Vérification: \texttt{passwordEncoder.matches(raw, encoded)}
+\end{itemize}
+
+\section{Conception des APIs REST}
+
+\subsection{Principes REST}
+
+Les APIs respectent les principes REST:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Ressources}: Identifiées par des URIs (/products, /orders)
+    \item \textbf{Méthodes HTTP}: GET (lecture), POST (création), PUT (modification), DELETE (suppression)
+    \item \textbf{Stateless}: Chaque requête contient toutes les informations nécessaires
+    \item \textbf{Représentation JSON}: Format d'échange de données
+    \item \textbf{Codes de statut HTTP}: 200 (OK), 201 (Created), 400 (Bad Request), 404 (Not Found), 500 (Internal Error)
+\end{itemize}
+
+\subsection{APIs Product Service}
+
+\begin{table}[H]
+\centering
+\caption{Endpoints Product Service}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Méthode} & \textbf{Endpoint} & \textbf{Description} \\
+\hline
+GET & /products & Liste tous les produits \\
+\hline
+GET & /products/\{id\} & Récupère un produit par ID \\
+\hline
+GET & /products/category/\{categoryId\} & Produits par catégorie \\
+\hline
+POST & /products & Crée un nouveau produit (Admin) \\
+\hline
+PUT & /products/\{id\} & Modifie un produit (Admin) \\
+\hline
+DELETE & /products/\{id\} & Supprime un produit (Admin) \\
+\hline
+GET & /categories & Liste toutes les catégories \\
+\hline
+POST & /categories & Crée une catégorie (Admin) \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{APIs Order Service}
+
+\begin{table}[H]
+\centering
+\caption{Endpoints Order Service}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Méthode} & \textbf{Endpoint} & \textbf{Description} \\
+\hline
+GET & /cart & Récupère le panier de l'utilisateur \\
+\hline
+POST & /cart/items & Ajoute un article au panier \\
+\hline
+PUT & /cart/items/\{id\} & Modifie la quantité d'un article \\
+\hline
+DELETE & /cart/items/\{id\} & Supprime un article du panier \\
+\hline
+DELETE & /cart & Vide le panier \\
+\hline
+POST & /orders & Crée une commande à partir du panier \\
+\hline
+GET & /orders & Liste les commandes de l'utilisateur \\
+\hline
+GET & /orders/\{id\} & Détails d'une commande \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{APIs Client API}
+
+\begin{table}[H]
+\centering
+\caption{Endpoints Client API}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Méthode} & \textbf{Endpoint} & \textbf{Description} \\
+\hline
+POST & /auth/register & Inscription d'un nouvel utilisateur \\
+\hline
+POST & /auth/verify & Vérification du code email \\
+\hline
+POST & /auth/login & Connexion (retourne JWT) \\
+\hline
+GET & /users/me & Récupère le profil de l'utilisateur \\
+\hline
+PUT & /users/me & Modifie le profil \\
+\hline
+PUT & /users/me/password & Change le mot de passe \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Format des requêtes et réponses}
+
+\subsubsection{Exemple: Inscription}
+
+\textbf{Requête POST /auth/register}:
+
+\begin{lstlisting}[language=JSON]
+{
+  "username": "johndoe",
+  "email": "john@example.com",
+  "password": "SecurePass123!",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+\end{lstlisting}
+
+\textbf{Réponse 201 Created}:
+
+\begin{lstlisting}[language=JSON]
+{
+  "message": "User registered successfully. 
+              Please check your email for verification code."
+}
+\end{lstlisting}
+
+\subsubsection{Exemple: Connexion}
+
+\textbf{Requête POST /auth/login}:
+
+\begin{lstlisting}[language=JSON]
+{
+  "username": "johndoe",
+  "password": "SecurePass123!"
+}
+\end{lstlisting}
+
+\textbf{Réponse 200 OK}:
+
+\begin{lstlisting}[language=JSON]
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "type": "Bearer",
+  "username": "johndoe"
+}
+\end{lstlisting}
+
+\section{Configuration et déploiement}
+
+\subsection{Configuration centralisée}
+
+Le Config Server utilise un repository Git local (config-repo) contenant:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{application.properties}: Configuration commune (Actuator, logging, Prometheus)
+    \item \textbf{eureka-server.properties}: Configuration Eureka
+    \item \textbf{gateway-service.properties}: Configuration Gateway (CORS, routing)
+    \item \textbf{product-service.properties}: Configuration Product Service (DB, Eureka)
+    \item \textbf{order-service.properties}: Configuration Order Service (DB, Eureka, Feign)
+    \item \textbf{client-api.properties}: Configuration Client API (DB, JWT, Email)
+\end{itemize}
+
+\subsection{Containerisation Docker}
+
+Chaque microservice possède un Dockerfile:
+
+\begin{lstlisting}[language=Docker, caption=Dockerfile (exemple)]
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY target/*.jar app.jar
+EXPOSE 8004
+ENTRYPOINT ["java", "-jar", "app.jar"]
+\end{lstlisting}
+
+\subsection{Orchestration Docker Compose}
+
+Le fichier \texttt{docker-compose.yml} définit:
+
+\begin{itemize}[leftmargin=*]
+    \item Les 9 services (MySQL, Config, Eureka, Gateway, Product, Order, Client, Prometheus, Grafana)
+    \item Les dépendances entre services (depends\_on)
+    \item Les health checks pour chaque service
+    \item Les variables d'environnement
+    \item Les volumes pour la persistance des données
+    \item Le réseau bridge (ecommerce-network)
+\end{itemize}
+
+\section{Conclusion}
+
+Ce chapitre a présenté la conception détaillée de la plateforme e-commerce, incluant les modèles de données, l'architecture des microservices, les APIs REST et les aspects de sécurité. Le chapitre suivant décrira l'implémentation concrète et les tests réalisés.
+
+\chapter{Réalisation et Tests}
+
+\section{Introduction}
+
+Ce chapitre présente l'implémentation concrète de la plateforme e-commerce, les interfaces utilisateur développées et les tests effectués pour valider le bon fonctionnement du système.
+
+\section{Environnement de développement}
+
+\subsection{Outils et IDE}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{IDE Backend}: Eclipse IDE for Enterprise Java and Web Developers
+    \item \textbf{IDE Frontend}: Visual Studio Code avec extensions React
+    \item \textbf{Build Tool}: Maven 3.9+ pour les projets Java
+    \item \textbf{Package Manager}: npm pour le projet React
+    \item \textbf{Base de données}: MySQL 8.0 (via XAMPP ou Docker)
+    \item \textbf{Conteneurisation}: Docker Desktop
+    \item \textbf{Versioning}: Git avec repository local
+\end{itemize}
+
+\subsection{Structure des projets}
+
+Chaque microservice suit la structure Maven standard:
+
+\begin{verbatim}
+service-name/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/ecommerce/service/
+│   │   │       ├── controller/
+│   │   │       ├── service/
+│   │   │       ├── repository/
+│   │   │       ├── entity/
+│   │   │       ├── dto/
+│   │   │       ├── config/
+│   │   │       └── ServiceApplication.java
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       └── bootstrap.properties
+│   └── test/
+├── pom.xml
+└── Dockerfile
+\end{verbatim}
+
+\section{Implémentation des microservices}
+
+\subsection{Product Service}
+
+Le Product Service gère le catalogue de produits avec les fonctionnalités suivantes:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{DataInitializer}: Initialise la base de données avec des catégories et produits de démonstration au démarrage
+    \item \textbf{ProductController}: Expose les endpoints REST pour les opérations CRUD
+    \item \textbf{ProductService}: Logique métier (validation, recherche, filtrage)
+    \item \textbf{ProductRepository}: Interface JPA pour l'accès aux données
+    \item \textbf{CategoryController/Service}: Gestion des catégories
+\end{itemize}
+
+\textbf{Fonctionnalités clés}:
+\begin{itemize}
+    \item Recherche de produits par nom ou catégorie
+    \item Gestion du stock avec validation
+    \item Relations ManyToOne entre Product et Category
+    \item Timestamps automatiques (createdDate, updatedDate)
+\end{itemize}
+
+\subsection{Order Service}
+
+Le Order Service gère les paniers et les commandes:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{CartController/Service}: Gestion du panier utilisateur
+    \item \textbf{OrderController/Service}: Création et consultation des commandes
+    \item \textbf{ProductClient}: Client Feign pour communiquer avec Product Service
+    \item \textbf{GlobalExceptionHandler}: Gestion centralisée des erreurs
+\end{itemize}
+
+\textbf{Logique métier importante}:
+\begin{itemize}
+    \item Vérification du stock avant ajout au panier
+    \item Calcul automatique des totaux
+    \item Mise à jour du stock lors de la validation de commande
+    \item Gestion des états de commande (PENDING, CONFIRMED, etc.)
+\end{itemize}
+
+\subsection{Client API}
+
+Le Client API gère l'authentification et les utilisateurs:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{AuthController}: Endpoints d'inscription, connexion, vérification
+    \item \textbf{UserController}: Gestion du profil utilisateur
+    \item \textbf{JwtTokenProvider}: Génération et validation des tokens JWT
+    \item \textbf{JwtAuthenticationFilter}: Filtre pour extraire et valider le token
+    \item \textbf{EmailService}: Envoi d'emails de vérification via Gmail SMTP
+    \item \textbf{SecurityConfig}: Configuration Spring Security
+\end{itemize}
+
+\textbf{Sécurité implémentée}:
+\begin{itemize}
+    \item Hashage BCrypt des mots de passe
+    \item Tokens JWT avec expiration (1 heure)
+    \item Vérification email obligatoire
+    \item Protection des endpoints par authentification
+\end{itemize}
+
+\subsection{Services d'infrastructure}
+
+\subsubsection{Config Server}
+
+\begin{itemize}[leftmargin=*]
+    \item Annotation \texttt{@EnableConfigServer}
+    \item Configuration du repository Git local
+    \item Exposition des configurations via HTTP
+    \item Actuator pour health checks
+\end{itemize}
+
+\subsubsection{Eureka Server}
+
+\begin{itemize}[leftmargin=*]
+    \item Annotation \texttt{@EnableEurekaServer}
+    \item Dashboard web sur port 8002
+    \item Heartbeat des services clients
+    \item Découverte dynamique des instances
+\end{itemize}
+
+\subsubsection{Gateway Service}
+
+\begin{itemize}[leftmargin=*]
+    \item Spring Cloud Gateway (WebFlux)
+    \item Routage automatique via Eureka
+    \item Configuration CORS pour le frontend
+    \item Load balancing automatique
+\end{itemize}
+
+\section{Implémentation du frontend}
+
+\subsection{Architecture React}
+
+Le frontend est organisé selon les bonnes pratiques React:
+
+\begin{verbatim}
+react-frontend/
+├── src/
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── Layout.jsx
+│   │   └── PrivateRoute.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── auth/
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   └── Verify.jsx
+│   │   ├── products/
+│   │   │   ├── ProductsPage.jsx
+│   │   │   └── ProductDetail.jsx
+│   │   ├── cart/
+│   │   │   └── CartPage.jsx
+│   │   └── orders/
+│   │       ├── OrdersPage.jsx
+│   │       └── OrderDetail.jsx
+│   ├── context/
+│   │   └── AuthContext.jsx
+│   ├── App.jsx
+│   └── main.jsx
+└── package.json
+\end{verbatim}
+
+\subsection{Gestion de l'état}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{AuthContext}: Context API pour gérer l'authentification globale
+    \item \textbf{localStorage}: Persistance du token JWT
+    \item \textbf{useState/useEffect}: Hooks React pour l'état local
+    \item \textbf{Axios interceptors}: Ajout automatique du token aux requêtes
+\end{itemize}
+
+\subsection{Routage}
+
+React Router DOM gère la navigation:
+
+\begin{itemize}[leftmargin=*]
+    \item Routes publiques: /, /login, /register, /verify, /products
+    \item Routes protégées: /cart, /orders, /profile
+    \item PrivateRoute: Composant HOC pour protéger les routes
+    \item Redirection automatique si non authentifié
+\end{itemize}
+
+\section{Interfaces utilisateur}
+
+\subsection{Page d'inscription}
+
+La page d'inscription permet aux nouveaux utilisateurs de créer un compte.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{jee screenshots/screencapture-localhost-3000-register-2025-12-31-17_30_09.png}
+\caption{Page d'inscription avec formulaire de création de compte}
+\end{figure}
+
+\textbf{Fonctionnalités}:
+\begin{itemize}
+    \item Formulaire avec validation côté client
+    \item Champs: username, email, password, firstName, lastName
+    \item Messages d'erreur en cas de données invalides
+    \item Redirection vers la page de vérification après inscription
+\end{itemize}
+
+\subsection{Page de connexion}
+
+La page de connexion permet aux utilisateurs existants de s'authentifier.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{jee screenshots/screencapture-localhost-3000-login-2025-12-31-17_30_20.png}
+\caption{Page de connexion avec authentification JWT}
+\end{figure}
+
+\textbf{Fonctionnalités}:
+\begin{itemize}
+    \item Formulaire email/password
+    \item Validation des credentials
+    \item Stockage du token JWT
+    \item Redirection vers la page d'accueil après connexion
+\end{itemize}
+
+\subsection{Page d'accueil}
+
+La page d'accueil présente la plateforme et les produits en vedette.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{jee screenshots/screencapture-localhost-3000-2025-12-31-17_31_41.png}
+\caption{Page d'accueil de la plateforme e-commerce}
+\end{figure}
+
+\textbf{Éléments}:
+\begin{itemize}
+    \item Barre de navigation avec liens vers les sections
+    \item Section hero avec présentation
+    \item Affichage des catégories de produits
+    \item Footer avec informations de contact
+\end{itemize}
+
+\subsection{Catalogue de produits}
+
+La page produits affiche le catalogue complet avec filtrage.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{jee screenshots/screencapture-localhost-3000-products-2025-12-31-17_31_54.png}
+\caption{Catalogue de produits avec filtrage par catégorie}
+\end{figure}
+
+\textbf{Fonctionnalités}:
+\begin{itemize}
+    \item Grille de produits responsive
+    \item Filtrage par catégorie
+    \item Affichage: image, nom, prix, stock
+    \item Bouton "Voir détails" pour chaque produit
+\end{itemize}
+
+\subsection{Détails d'un produit}
+
+La page de détails affiche toutes les informations d'un produit.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{jee screenshots/screencapture-localhost-3000-products-1-2025-12-31-17_32_15.png}
+\caption{Page de détails d'un produit avec option d'ajout au panier}
+\end{figure}
+
+\textbf{Informations affichées}:
+\begin{itemize}
+    \item Image du produit
+    \item Nom et description complète
+    \item Prix et stock disponible
+    \item Catégorie
+    \item Sélecteur de quantité
+    \item Bouton "Ajouter au panier" (si authentifié)
+\end{itemize}
+
+\subsection{Panier d'achat}
+
+La page panier permet de gérer les articles avant commande.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{jee screenshots/screencapture-localhost-3000-cart-2025-12-31-17_32_47.png}
+\caption{Panier d'achat avec gestion des quantités}
+\end{figure}
+
+\textbf{Fonctionnalités}:
+\begin{itemize}
+    \item Liste des articles avec image, nom, prix, quantité
+    \item Modification de la quantité
+    \item Suppression d'articles
+    \item Calcul du total en temps réel
+    \item Bouton "Passer commande"
+\end{itemize}
+
+\subsection{Liste des commandes}
+
+La page commandes affiche l'historique des commandes de l'utilisateur.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{jee screenshots/screencapture-localhost-3000-orders-2025-12-31-17_33_11.png}
+\caption{Liste des commandes avec statuts}
+\end{figure}
+
+\textbf{Informations affichées}:
+\begin{itemize}
+    \item Numéro de commande
+    \item Date de commande
+    \item Montant total
+    \item Statut (PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED)
+    \item Bouton "Voir détails"
+\end{itemize}
+
+\subsection{Détails d'une commande}
+
+La page de détails de commande affiche tous les articles commandés.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{jee screenshots/screencapture-localhost-3000-orders-5-2025-12-31-17_33_21.png}
+\caption{Détails d'une commande avec liste des articles}
+\end{figure}
+
+\textbf{Informations affichées}:
+\begin{itemize}
+    \item Informations de la commande (numéro, date, statut)
+    \item Liste des articles: nom, quantité, prix unitaire, sous-total
+    \item Montant total de la commande
+\end{itemize}
+
+\section{Tests et validation}
+
+\subsection{Tests unitaires}
+
+Des tests unitaires ont été implémentés pour les services critiques:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{ProductServiceTests}: Tests des opérations CRUD produits
+    \item \textbf{OrderServiceTests}: Tests de création de commande, gestion du panier
+    \item \textbf{UserServiceTests}: Tests d'inscription, authentification, vérification
+    \item \textbf{JwtTokenProviderTests}: Tests de génération et validation de tokens
+\end{itemize}
+
+\subsection{Tests d'intégration}
+
+Tests d'intégration pour valider la communication entre services:
+
+\begin{itemize}[leftmargin=*]
+    \item Communication Order Service ↔ Product Service via Feign
+    \item Enregistrement des services dans Eureka
+    \item Routage via Gateway
+    \item Récupération de configuration depuis Config Server
+\end{itemize}
+
+\subsection{Tests fonctionnels}
+
+Tests manuels des scénarios utilisateur:
+
+\begin{table}[H]
+\centering
+\caption{Résultats des tests fonctionnels}
+\begin{tabularx}{\textwidth}{|l|X|c|}
+\hline
+\textbf{Scénario} & \textbf{Description} & \textbf{Résultat} \\
+\hline
+Inscription & Création d'un compte avec vérification email & ✓ \\
+\hline
+Connexion & Authentification et génération JWT & ✓ \\
+\hline
+Consultation produits & Affichage du catalogue et filtrage & ✓ \\
+\hline
+Ajout au panier & Ajout de produits avec vérification stock & ✓ \\
+\hline
+Passage de commande & Création de commande et mise à jour stock & ✓ \\
+\hline
+Consultation commandes & Affichage de l'historique & ✓ \\
+\hline
+Gestion du profil & Modification des informations utilisateur & ✓ \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Tests de performance}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Temps de réponse API}: Moyenne < 500ms pour les endpoints CRUD
+    \item \textbf{Chargement frontend}: Page d'accueil < 2 secondes
+    \item \textbf{Concurrence}: Tests avec 50 utilisateurs simultanés réussis
+\end{itemize}
+
+\subsection{Tests de sécurité}
+
+\begin{itemize}[leftmargin=*]
+    \item Vérification du hashage BCrypt des mots de passe
+    \item Validation de l'expiration des tokens JWT
+    \item Test de protection des endpoints (401 sans token)
+    \item Vérification de la configuration CORS
+\end{itemize}
+
+\section{Déploiement}
+
+\subsection{Déploiement local avec Docker Compose}
+
+Le déploiement complet s'effectue en une commande:
+
+\begin{verbatim}
+docker-compose up -d
+\end{verbatim}
+
+\textbf{Ordre de démarrage}:
+\begin{enumerate}
+    \item MySQL (avec health check)
+    \item Config Server (avec health check)
+    \item Eureka Server (dépend de Config Server)
+    \item Gateway Service (dépend d'Eureka)
+    \item Services métier (Product, Order, Client)
+    \item Frontend React
+    \item Monitoring (Prometheus, Grafana)
+\end{enumerate}
+
+\subsection{Vérification du déploiement}
+
+\textbf{Endpoints de vérification}:
+\begin{itemize}
+    \item Config Server: \texttt{http://localhost:8001/actuator/health}
+    \item Eureka Dashboard: \texttt{http://localhost:8002}
+    \item Gateway: \texttt{http://localhost:8003/actuator/health}
+    \item Frontend: \texttt{http://localhost:3000}
+    \item Prometheus: \texttt{http://localhost:9090}
+    \item Grafana: \texttt{http://localhost:3001}
+\end{itemize}
+
+\subsection{Monitoring avec Prometheus et Grafana}
+
+\textbf{Métriques collectées}:
+\begin{itemize}
+    \item Nombre de requêtes HTTP par endpoint
+    \item Temps de réponse des APIs
+    \item Utilisation mémoire JVM
+    \item Statut des services (UP/DOWN)
+    \item Nombre de services enregistrés dans Eureka
+\end{itemize}
+
+\section{Difficultés rencontrées et solutions}
+
+\subsection{Communication inter-services}
+
+\textbf{Problème}: Erreurs "Connection Refused" entre services Docker.
+
+\textbf{Solution}: 
+\begin{itemize}
+    \item Utilisation du nom de service Docker au lieu de localhost
+    \item Configuration des health checks et depends\_on
+    \item Ajout de retry logic pour Eureka
+\end{itemize}
+
+\subsection{Configuration CORS}
+
+\textbf{Problème}: Requêtes bloquées par CORS depuis le frontend.
+
+\textbf{Solution}:
+\begin{itemize}
+    \item Configuration CORS dans Gateway Service
+    \item Utilisation de \texttt{allowed-origin-patterns} au lieu de \texttt{allowed-origins}
+    \item Activation de \texttt{allow-credentials=true}
+\end{itemize}
+
+\subsection{Gestion du stock}
+
+\textbf{Problème}: Conditions de concurrence lors de la mise à jour du stock.
+
+\textbf{Solution}:
+\begin{itemize}
+    \item Transactions JPA avec \texttt{@Transactional}
+    \item Vérification du stock avant décrémentation
+    \item Gestion d'exception \texttt{InsufficientStockException}
+\end{itemize}
+
+\section{Conclusion}
+
+Ce chapitre a présenté l'implémentation concrète de la plateforme e-commerce, les interfaces utilisateur développées et les tests effectués. Le système développé répond aux besoins fonctionnels et non fonctionnels identifiés, et les tests valident le bon fonctionnement de l'ensemble des composants.
+
+\chapter*{Conclusion et Perspectives}
+\addcontentsline{toc}{chapter}{Conclusion et Perspectives}
+
+\section*{Synthèse du travail réalisé}
+\addcontentsline{toc}{section}{Synthèse du travail réalisé}
+
+Ce projet de fin d'études a permis de concevoir et développer une plateforme e-commerce complète basée sur une architecture microservices. Les objectifs fixés en début de projet ont été atteints:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Architecture microservices robuste}: Nous avons implémenté une architecture modulaire avec six microservices indépendants (Config Server, Eureka Server, Gateway Service, Product Service, Order Service, Client API), chacun ayant une responsabilité clairement définie.
+    
+    \item \textbf{Backend performant}: L'utilisation de Spring Boot 3.5.9 et Spring Cloud 2025.0.1 a permis de développer des services robustes, scalables et maintenables. Les patterns microservices essentiels (Service Discovery, API Gateway, Configuration centralisée) ont été correctement implémentés.
+    
+    \item \textbf{Frontend moderne}: L'interface utilisateur développée avec React 19 offre une expérience utilisateur fluide et intuitive, avec un design responsive adapté à tous les écrans.
+    
+    \item \textbf{Sécurité renforcée}: Le système d'authentification basé sur JWT, combiné au hashage BCrypt des mots de passe et à la vérification par email, garantit un niveau de sécurité élevé.
+    
+    \item \textbf{Containerisation réussie}: L'utilisation de Docker et Docker Compose facilite grandement le déploiement et garantit la portabilité de l'application.
+    
+    \item \textbf{Observabilité}: L'intégration de Prometheus et Grafana permet de surveiller en temps réel la santé et les performances du système.
+\end{enumerate}
+
+\section*{Compétences acquises}
+\addcontentsline{toc}{section}{Compétences acquises}
+
+Ce projet a permis de développer des compétences techniques et méthodologiques importantes:
+
+\textbf{Compétences techniques}:
+\begin{itemize}[leftmargin=*]
+    \item Maîtrise de l'écosystème Spring (Boot, Cloud, Data JPA, Security)
+    \item Développement d'applications React modernes
+    \item Conception et implémentation d'APIs REST
+    \item Containerisation avec Docker
+    \item Gestion de bases de données relationnelles (MySQL)
+    \item Monitoring et observabilité (Prometheus, Grafana)
+\end{itemize}
+
+\textbf{Compétences méthodologiques}:
+\begin{itemize}[leftmargin=*]
+    \item Analyse et spécification des besoins
+    \item Conception d'architectures distribuées
+    \item Gestion de projet en mode agile
+    \item Résolution de problèmes complexes
+    \item Documentation technique
+\end{itemize}
+
+\section*{Perspectives d'évolution}
+\addcontentsline{toc}{section}{Perspectives d'évolution}
+
+Plusieurs améliorations et extensions peuvent être envisagées pour enrichir la plateforme:
+
+\subsection*{Court terme}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Système de paiement}: Intégration d'une passerelle de paiement (Stripe, PayPal)
+    \item \textbf{Gestion des images}: Upload et stockage des images produits (AWS S3, MinIO)
+    \item \textbf{Notifications}: Service de notifications en temps réel (WebSocket, Server-Sent Events)
+    \item \textbf{Recherche avancée}: Intégration d'Elasticsearch pour une recherche full-text performante
+    \item \textbf{Cache distribué}: Utilisation de Redis pour améliorer les performances
+\end{itemize}
+
+\subsection*{Moyen terme}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Service de recommandation}: Système de recommandation de produits basé sur l'historique
+    \item \textbf{Gestion des avis}: Module d'avis et de notation des produits
+    \item \textbf{Programme de fidélité}: Système de points et de récompenses
+    \item \textbf{Multi-vendeurs}: Extension pour supporter plusieurs vendeurs (marketplace)
+    \item \textbf{Application mobile}: Développement d'applications iOS et Android (React Native, Flutter)
+\end{itemize}
+
+\subsection*{Long terme}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Intelligence artificielle}: Chatbot pour l'assistance client, détection de fraude
+    \item \textbf{Internationalisation}: Support multi-langues et multi-devises
+    \item \textbf{Analytics avancés}: Dashboard d'analyse des ventes et du comportement utilisateur
+    \item \textbf{Kubernetes}: Migration vers Kubernetes pour une orchestration plus avancée
+    \item \textbf{Event-Driven Architecture}: Adoption de Kafka pour la communication asynchrone
+\end{itemize}
+
+\section*{Conclusion finale}
+\addcontentsline{toc}{section}{Conclusion finale}
+
+Ce projet a démontré la viabilité et les avantages d'une architecture microservices pour le développement d'applications e-commerce modernes. La modularité, la scalabilité et la maintenabilité offertes par cette approche en font un choix pertinent pour des applications d'entreprise.
+
+Au-delà des aspects techniques, ce projet a été une expérience enrichissante qui a permis de mettre en pratique les connaissances acquises durant la formation et de développer une vision globale du développement d'applications distribuées.
+
+La plateforme développée constitue une base solide qui peut être étendue et améliorée pour répondre à des besoins plus complexes et évoluer vers une solution de production complète.
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{Références Bibliographiques}
+
+\bibitem{spring-boot}
+\textbf{Spring Boot Documentation}\\
+\textit{Spring Boot Reference Guide}\\
+\url{https://docs.spring.io/spring-boot/docs/current/reference/html/}
+
+\bibitem{spring-cloud}
+\textbf{Spring Cloud Documentation}\\
+\textit{Spring Cloud Reference Guide}\\
+\url{https://spring.io/projects/spring-cloud}
+
+\bibitem{microservices-patterns}
+\textbf{Chris Richardson}\\
+\textit{Microservices Patterns: With examples in Java}\\
+Manning Publications, 2018
+
+\bibitem{react-docs}
+\textbf{React Documentation}\\
+\textit{React - A JavaScript library for building user interfaces}\\
+\url{https://react.dev/}
+
+\bibitem{docker-docs}
+\textbf{Docker Documentation}\\
+\textit{Docker Documentation}\\
+\url{https://docs.docker.com/}
+
+\bibitem{jwt}
+\textbf{JSON Web Tokens}\\
+\textit{JWT.IO - Introduction to JSON Web Tokens}\\
+\url{https://jwt.io/introduction}
+
+\bibitem{rest-api}
+\textbf{Roy Fielding}\\
+\textit{Architectural Styles and the Design of Network-based Software Architectures}\\
+Doctoral dissertation, University of California, Irvine, 2000
+
+\bibitem{mysql}
+\textbf{MySQL Documentation}\\
+\textit{MySQL 8.0 Reference Manual}\\
+\url{https://dev.mysql.com/doc/refman/8.0/en/}
+
+\bibitem{prometheus}
+\textbf{Prometheus Documentation}\\
+\textit{Prometheus - Monitoring system \& time series database}\\
+\url{https://prometheus.io/docs/}
+
+\bibitem{grafana}
+\textbf{Grafana Documentation}\\
+\textit{Grafana Documentation}\\
+\url{https://grafana.com/docs/}
+
+\bibitem{eureka}
+\textbf{Netflix Eureka}\\
+\textit{Eureka - Service Discovery}\\
+\url{https://github.com/Netflix/eureka/wiki}
+
+\bibitem{feign}
+\textbf{OpenFeign}\\
+\textit{Feign makes writing java http clients easier}\\
+\url{https://github.com/OpenFeign/feign}
+
+\end{thebibliography}
+
+\end{document}

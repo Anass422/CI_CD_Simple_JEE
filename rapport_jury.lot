@@ -1,0 +1,19 @@
+\babel@toc {french}{}\relax 
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1.1}{\ignorespaces Défis et solutions dans l'architecture microservices}}{10}{table.caption.3}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Description du cas d'utilisation: S'inscrire}}{21}{table.caption.6}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Description du cas d'utilisation: Passer une commande}}{22}{table.caption.7}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Table users}}{24}{table.caption.8}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Table products}}{24}{table.caption.9}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Table categories}}{24}{table.caption.10}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Table orders}}{25}{table.caption.11}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Table order\_items}}{25}{table.caption.12}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Table carts}}{25}{table.caption.13}%
+\contentsline {table}{\numberline {3.7}{\ignorespaces Table cart\_items}}{25}{table.caption.14}%
+\contentsline {table}{\numberline {3.8}{\ignorespaces Endpoints Product Service}}{28}{table.caption.15}%
+\contentsline {table}{\numberline {3.9}{\ignorespaces Endpoints Order Service}}{28}{table.caption.16}%
+\contentsline {table}{\numberline {3.10}{\ignorespaces Endpoints Client API}}{29}{table.caption.17}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Résultats des tests fonctionnels}}{43}{table.caption.26}%
